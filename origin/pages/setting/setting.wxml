@@ -1,0 +1,50 @@
+<view class="container">
+  <swiper vertical="{{false}}"  indicator-dots="true" autoplay="{{true}}" interval="5000" circular="true" style="width:100%">
+    <swiper-item>
+      <image style="width:100%" src="cloud://cloud-develop-3gs636i533f45757.636c-cloud-develop-3gs636i533f45757-1306694797/post-1@text.jpg" />
+    </swiper-item>
+    <swiper-item>
+      <image style="width:100%" src="cloud://cloud-develop-3gs636i533f45757.636c-cloud-develop-3gs636i533f45757-1306694797/post-2@text.jpg" />
+    </swiper-item>
+    <swiper-item>
+      <image style="width:100%" src="cloud://cloud-develop-3gs636i533f45757.636c-cloud-develop-3gs636i533f45757-1306694797/post-3@text.jpg" />
+    </swiper-item>
+    <swiper-item>
+      <image style="width:100%" src="cloud://cloud-develop-3gs636i533f45757.636c-cloud-develop-3gs636i533f45757-1306694797/post-4@text.jpg" />
+    </swiper-item>
+  </swiper>
+  <view class="category-item personal-info">
+    <view class="user-avatar">
+      <image src="{{userInfo.avatarUrl}}"></image>
+    </view>
+    <view class="user-name">
+      <view class="user-nickname">
+        <text>{{userInfo.nickName}}</text>
+      </view>
+      <view class="user-locaiton">
+        <text>所在地：{{userInfo.city}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="category-item">
+    <block wx:for="{{cache}}">
+      <view class="detail-item" catchtap="{{item.tap}}">
+        <image src="{{item.iconurl}}"></image>
+        <text>{{item.title}}</text>
+        <view class="detail-item-btn"></view>
+      </view>
+    </block>
+  </view>
+  <view class="category-item">
+    <block wx:for="{{device}}">
+      <view class="detail-item" catchtap="{{item.tap}}">
+        <image src="{{item.iconurl}}"></image>
+        <text>{{item.title}}</text>
+        <view class="detail-item-btn"></view>
+      </view>
+    </block>
+  </view>
+  <modal title="指南针" confirm-text="确定" no-cancel hidden="{{compassHidden}}" bindconfirm="hideCompass" confirm-color="#1F4BA5">
+    当前方向：偏北{{compassVal}}°
+  </modal>
+</view>

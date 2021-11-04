@@ -1,0 +1,9 @@
+<view class="container">
+    <image class="avatar" src="../../images/hit.png"></image>
+    <text class="motto">Hello, 欢迎来到HIT</text>
+    <view catchtap="onTapJump" class="journey-container">
+        <van-button color="linear-gradient(to right, #3C8CE7, #00EAFF)" size="large" round>
+            <text class="journey">开启课表之旅</text>
+</van-button>
+    </view>
+</view>

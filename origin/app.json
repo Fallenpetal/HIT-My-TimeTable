@@ -1,0 +1,49 @@
+{
+  "pages":[
+    "pages/welcome/welcome",
+    "pages/index/index",
+    "pages/setting/setting",
+    "pages/setting/device/device"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "我的课表",
+    "navigationBarTextStyle":"black"
+  },
+  "usingComponents": {
+    "van-button": "@vant/weapp/button/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-icon": "@vant/weapp/icon/index"
+  },
+  "tabBar": {
+    "borderStyle": "white",
+    "selectedColor": "#4A6141",
+    "color": "#333",
+    "backgroundColor": "#fff",
+    "position": "bottom",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "我的课表",
+        "iconPath": "images/tab_1.png",
+        "selectedIconPath": "images/tab_2.png"
+      },
+      {
+        "pagePath": "pages/setting/setting",
+        "text": "个人中心",
+        "iconPath": "images/tab_3.png",
+        "selectedIconPath": "images/tab_4.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}

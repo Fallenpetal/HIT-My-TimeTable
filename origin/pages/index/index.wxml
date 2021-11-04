@@ -1,0 +1,120 @@
+<view class='content'>
+  <view class='title_right'>
+    <view class="tab-item ">
+      <view class="onRight">周</view>  <!--周-->
+    </view>
+  </view>
+      <view class='title' bindtap='clickHide'>
+        <view class='title_left'>
+          <view class='btn btn_'></view>
+          <view class='week' catchtap='clickShow'>
+            第{{weekList[page]}}周
+          </view>
+          <view class='btn'></view>
+        </view>
+      </view>
+      <scroll-view scroll-x="true" class='show' wx:if='{{show}}'>
+        <view class='show_week' wx:for="{{weekList}}" wx:key="index" data-week="{{index}}" bindtap="changeWeek">{{item}}</view>    <!--切换周-->
+      </scroll-view>
+        <view class="top">
+          <view class='left'>节\周</view>
+          <view wx:for="{{weekdaylist}}" wx:key="index" class="top-text" style="width:{{(windowWidth-35)/7}}px">
+            {{item}}
+          </view>
+        </view>
+        <scroll-view scroll-y="true" class="scroll" style='height:{{windowHeight-110}}px;' bindtap='clickHide'>
+          <view style="width:100%;display:flex;" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+            <view style="background-color:#EFEFF4;color:#333;">  <!--最左栏1-14-->
+              <view wx:for="{{timelist}}" wx:key="index" class="timelist" style='height:99.5px;border-bottom:1rpx solid lightgray;'>
+                {{item}}
+              </view>
+            </view>
+            <view wx:for="{{[1,2,3,4,5,6]}}" wx:for-index="i">  <!--画中间的每一条横线-->
+              <view style="width:100%;margin-top:{{i*100}}px;  position: absolute;border-bottom:1rpx solid lightgray;">
+                <block wx:for="{{[1,2,3,4,5,6,7]}}" wx:for-index="j">
+                  <view data-id='{{(i+1)*10+j+1}}' bindlongpress="showPopup" style="height:100px;width:{{(windowWidth-35)/7}}px;margin-left:{{j*(windowWidth-35)/7}}px;border:1rpx solid #f5f5f5; position:absolute"></view>
+                </block> 
+              </view>
+            </view>
+            <!--课表主体-->
+            <view wx:for="{{wlist[page]}}" wx:key="index"> <!--通过偏移运算来对应上第几周-->
+              <view class="flex-item kcb-item" bindtap="showCardView" bindlongpress="removeIt" data-id='{{item._id}}' data-wlist='{{item}}' data-index='{{index}}' style="margin-left:{{(item.column-1)*98}}rpx;margin-top:{{(item.row-1)*100}}px;height:100px;  background-color:{{item.color}}"> 
+
+                <view class="smalltext">{{item.classname}}</view>
+
+                <view class='classRoom'>({{item.classroom}})</view>
+
+                <view class='logo' style="background-color:{{item.color}}">{{item.type}}</view>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+</view>
+<!--点击出现课程详情+蒙层-->
+<view class="drawer_screen" data-statu="close" wx:if="{{showModalStatus}}" bindtap='hideModal' ></view>
+<view class="drawer_box" animation="{{animationData}}" wx:if="{{showModalStatus}}" >
+  <view class="do_drawer_content" style="color:#FFF;background-color:{{cardView.color}}">
+    <view class='drawer_top'>
+      <text>{{cardView.classname}}</text>
+    </view>
+    <view>
+      <view class='noidle-item'>
+        <label class='noidle-item-prefix'>教师：</label>
+        <label class='noidle-item-content'>{{cardView.teacher}}</label>
+      </view>
+      <view class='noidle-item'>
+        <label class='noidle-item-prefix'>教室：</label>
+        <label class='noidle-item-content'>{{cardView.classroom}}</label>
+      </view>
+      <view class='noidle-item'>
+        <label class='noidle-item-prefix'>课程安排：</label>
+        <label class='noidle-item-content'>{{cardView.plan}}</label>
+      </view>
+      <view class='noidle-item'>
+        <label class='noidle-item-prefix'>上课时间：</label>
+        <label class='noidle-item-content'>{{cardView.time}}</label>
+      </view>
+    </view>
+    <view class='drawer_logo' style="background-color:{{cardView.color}}">{{cardView.type}}</view>
+  </view>
+</view>
+<!------------------添加课程的弹窗--------------->
+<van-popup show="{{ showpop }}" bind:close="onClose" closeable close-icon="close" close-icon-position="top-right" custom-style="height: 77%;width:80%;" round='{{true}}'> 
+  <view class="addtitle">
+    <view>添加课程</view>
+  </view> 
+<van-cell-group custom-class="form">
+<block wx:for="{{field_arr}}" wx:key="index" >
+<van-cell-group>
+  <van-field maxlength='{{index==2?1:-1}}' value="{{ value }}" data-id="{{index}}" label="{{item.label}}" placeholder="{{item.placeholder}}" border="{{ false }}" bind:blur="inputData"/>
+</van-cell-group>
+</block>
+  <van-cell title-class="ceil-class" title="上课星期" value="{{addClass.weekday}}" value-class='value-class' size="large" />
+  <van-cell title-class="ceil-class" title="上课时间" value="{{addClass.time}}" value-class='value-class' size="large" />
+  <view class="pop-bottom">
+    <view class="class-color">课程颜色</view>
+    <view class="color-expression" style="background-color:{{addData.color?addData.color:'#81D2FC'}}"></view>
+    <van-button type="primary" size='small' custom-class='colorChoose' bind:click="colorChoose">点击选择</van-button>
+  </view>
+  <view class="pop-bottom2">
+    <van-button type="primary" size='small' round='{{true}}' bind:click="SureAddData">确定</van-button>
+    <van-button type="danger" size='small'  round='{{true}}' bind:click="CancelAddData">取消</van-button>
+  </view>
+</van-cell-group>
+</van-popup>
+<van-popup show="{{ showColor }}" bind:close="onCloseColor" closeable close-icon="close" close-icon-position="top-right" custom-style="height: 50%;width:60%;" round='{{true}}'>
+  <view class="addColorTitle">
+    <view>选择颜色</view>
+  </view>
+ <view class="color-list">
+  <block  wx:for="{{colorlist}}" wx:key="index" >
+    <view class="unit-color" style="background-color:{{item}}" bindtap="colorSelect" data-color="{{item}}">
+      <van-icon name="success" wx:if="{{showIcon[index]}}"/>
+    </view>
+  </block>  
+ </view>
+ <view class="pop-bottom3">
+    <van-button type="primary" size='small' round='{{true}}' bind:click="SureColor">确定</van-button>
+    <van-button type="danger" size='small' round='{{true}}' bind:click="CancelColor">取消</van-button>
+</view>
+  </van-popup>
