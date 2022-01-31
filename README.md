@@ -1,2 +1,2 @@
-# HITwh-My-TimeTable
+# HIT-My-TimeTable
 this is freshman's project,just for reference
